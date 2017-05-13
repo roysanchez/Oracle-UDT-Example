@@ -1,8 +1,28 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>net461</TargetFramework>
+    <RuntimeIdentifiers>win7-x64</RuntimeIdentifiers>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'" />
+  
+  <Target Name="CopyODP" AfterTargets="Build">
+    <Message Text="Copying Oracle's ODP.NET DLLs to the output directory" Importance="high" />
+    <ItemGroup Condition="($(Platform) == 'AnyCPU' OR $(Platform) == 'x86')">
+      <_OracleDlls Include="$(SolutionDir)\OracleDlls\x86\*.*" />
+    </ItemGroup>
+    <ItemGroup Condition="$(Platform) == 'x64'">
+      <_OracleDlls Include="$(SolutionDir)\OracleDlls\x64\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_OracleDlls)" DestinationFolder="$(OutputPath)" />
+  </Target>
+  
+  <ItemGroup>
+    <Reference Include="Oracle.DataAccess">
+      <HintPath>..\OracleDlls\x64\Oracle.DataAccess.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
