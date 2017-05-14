@@ -40,6 +40,6 @@ namespace ConsoleApp
 
         public bool IsNull { get; set; }
 
-        public Employee Null => new Employee { IsNull = true };
+        public static Employee Null => new Employee { IsNull = true };
     }
 }
