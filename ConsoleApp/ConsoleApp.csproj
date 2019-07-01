@@ -2,13 +2,15 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFrameworks>net461</TargetFrameworks>
     <RuntimeIdentifiers>win7-x64</RuntimeIdentifiers>
+    <Platforms>x64</Platforms>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'" />
-  
+  <ItemGroup>
+    <PackageReference Include="ServForOracle" Version="8.2.0" />
+  </ItemGroup>
+
   <Target Name="CopyODP" AfterTargets="Build">
     <Message Text="Copying Oracle's ODP.NET DLLs to the output directory" Importance="high" />
     <ItemGroup Condition="($(Platform) == 'AnyCPU' OR $(Platform) == 'x86')">
@@ -19,10 +21,11 @@
     </ItemGroup>
     <Copy SourceFiles="@(_OracleDlls)" DestinationFolder="$(OutputPath)" />
   </Target>
-  
+
   <ItemGroup>
     <Reference Include="Oracle.DataAccess">
       <HintPath>..\OracleDlls\x64\Oracle.DataAccess.dll</HintPath>
     </Reference>
   </ItemGroup>
+
 </Project>
