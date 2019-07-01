@@ -2,27 +2,11 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net461</TargetFramework>
-    <RuntimeIdentifiers>win7-x64</RuntimeIdentifiers>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'" />
-  
-  <Target Name="CopyODP" AfterTargets="Build">
-    <Message Text="Copying Oracle's ODP.NET DLLs to the output directory" Importance="high" />
-    <ItemGroup Condition="($(Platform) == 'AnyCPU' OR $(Platform) == 'x86')">
-      <_OracleDlls Include="$(SolutionDir)\OracleDlls\x86\*.*" />
-    </ItemGroup>
-    <ItemGroup Condition="$(Platform) == 'x64'">
-      <_OracleDlls Include="$(SolutionDir)\OracleDlls\x64\*.*" />
-    </ItemGroup>
-    <Copy SourceFiles="@(_OracleDlls)" DestinationFolder="$(OutputPath)" />
-  </Target>
-  
   <ItemGroup>
-    <Reference Include="Oracle.DataAccess">
-      <HintPath>..\OracleDlls\x64\Oracle.DataAccess.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
+    <PackageReference Include="ServForOracle.NetCore" Version="1.0.0-beta02" />
   </ItemGroup>
 </Project>
