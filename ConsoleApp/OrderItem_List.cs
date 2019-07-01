@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp
 {
-    [OracleCustomTypeMapping("HR.EMPLOYEE_LIST")]
-    public class EmployeeListFactory : IOracleCustomTypeFactory, IOracleArrayTypeFactory
+    [OracleCustomTypeMapping("SERV_TEST.ORDER_ITEM_LIST_TYP")]
+    public class OrderItemListFactory : IOracleCustomTypeFactory, IOracleArrayTypeFactory
     {
         public IOracleCustomType CreateObject()
         {
-            return new EmployeeList();
+            return new OrderItemList();
         }
 
         public Array CreateArray(int numElems)
         {
-            return new Employee[numElems];
+            return new OrderItem[numElems];
         }
 
         public Array CreateStatusArray(int numElems)
@@ -27,10 +27,10 @@ namespace ConsoleApp
         }
     }
 
-    public class EmployeeList : IOracleCustomType
+    public class OrderItemList : IOracleCustomType
     {
         [OracleArrayMapping]
-        public Employee[] Array { get; set; }
+        public OrderItem[] Array { get; set; }
 
         private OracleUdtStatus[] m_statusArray;
 
@@ -42,12 +42,12 @@ namespace ConsoleApp
         public void ToCustomObject(OracleConnection con, IntPtr pUdt)
         {
             object objectStatusArray = null;
-            Array = (Employee[])OracleUdt.GetValue(con, pUdt, 0, out objectStatusArray);
+            Array = (OrderItem[])OracleUdt.GetValue(con, pUdt, 0, out objectStatusArray);
             m_statusArray = (OracleUdtStatus[])objectStatusArray;
         }
 
         public bool IsNull { get; set; }
 
-        public static EmployeeList Null => new EmployeeList { IsNull = true };
+        public static OrderItemList Null => new OrderItemList { IsNull = true };
     }
 }
